@@ -3,6 +3,7 @@ package com.quiztest.Quiz;
 
 import com.quiztest.Quiz.database.entities.PlayerEntity;
 import com.quiztest.Quiz.database.repositories.PlayerRepository;
+import com.quiztest.Quiz.service.QuizDataService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,25 +19,41 @@ import java.util.List;
 @Log
 public class StartUpRunner implements CommandLineRunner {
 
-    @Autowired
-     private PlayerRepository playerRepository;
 
+    @Autowired
+    private QuizDataService quizDataService;
 
     @Override
-    @Transactional
     public void run(String... args) throws Exception {
-        log.info("Executing stat up actions.. ");
-        playerRepository.save(new PlayerEntity("Hubert"));
-        playerRepository.save(new PlayerEntity("Paweł"));
-        playerRepository.save(new PlayerEntity("Mateusz"));
+        log.info("Executing start up actions: ");
 
-        log.info("List of players from data base: ");
-        List<PlayerEntity> PlayersFromDataBase = playerRepository.findAll();
-        for (PlayerEntity player :
-                PlayersFromDataBase) {
-            log.info("Retrieved player: " +player);
-        }
+        quizDataService.getQuizDataService();
+        quizDataService.getQuizQuestions();
     }
+
+
+//    @Autowired
+//     private PlayerRepository playerRepository;
+
+
+//    @Override
+//    @Transactional
+//    public void run(String... args) throws Exception {
+//        log.info("Executing stat up actions.. ");
+//
+//
+//
+//        playerRepository.save(new PlayerEntity("Hubert"));
+//        playerRepository.save(new PlayerEntity("Paweł"));
+//        playerRepository.save(new PlayerEntity("Mateusz"));
+//
+//        log.info("List of players from data base: ");
+//        List<PlayerEntity> PlayersFromDataBase = playerRepository.findAll();
+//        for (PlayerEntity player :
+//                PlayersFromDataBase) {
+//            log.info("Retrieved player: " +player);
+//        }
+//    }
 
 //    @Autowired
 //    private EntityManager entityManager;
