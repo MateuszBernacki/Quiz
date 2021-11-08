@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Quiz Application</title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <title>Quiz Pick Options</title>
+        <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../static/css/styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="#page-top">Quiz Application</a>
+                <a class="navbar-brand js-scroll-trigger" th:href="@{/}">Quiz Application - pick options</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -29,25 +29,47 @@
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-primary bg-gradient text-white">
-            <div class="container px-4 text-center">
-                <h1 class="fw-bolder">Ready for adventure?</h1>
-                <p class="lead">Go ahead and try yourself in Quiz!</p>
-                <a class="btn btn-lg btn-light" href="/select">Play NOW!</a>
-            </div>
-        </header>
+<!--        <header class="bg-primary bg-gradient text-white">-->
+<!--            <div class="container px-4 text-center">-->
+<!--                <h1 class="fw-bolder">Ready for adventure?</h1>-->
+<!--                <p class="lead">Go ahead and try yourself in Quiz!</p>-->
+<!--                <a class="btn btn-lg btn-light" href="#select">Play NOW!</a>-->
+<!--            </div>-->
+<!--        </header>-->
         <!-- About section-->
-        <section id="about">
+        <section id="Options">
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
-                        <h2>About this quiz</h2>
-                        <p class="lead">This quiz is all about knowledge.</p>
-                        <ul>
-                            <li>You can choose category.</li>
-                            <li>Feel free to pick proper difficulty level - you can choose between easy, medium and hard.</li>
-                            <li>If you are brave enough, you can select random category and difficulty level.</li>
-                        </ul>
+                        <form action="#" th:adtion="@{/select}" th:object="${gameOptions}" method="post">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <h4>Questions:</h4>
+                                    <label for="numberOfQuestionsInput">Number: </label>
+                                    <input class="form-control" name="numberOfQuestionsInput" id="numberOfQuestionsInput" th:field="*{numberOfQuestions}"
+                                           type="number" min="1" max="20" step="1"/>
+                                </div>
+                            </div>
+
+                            <div class="from-row">
+
+                                <div class="from-group">
+                                    <button type="submit" class="btn btn-primary">Play!</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="form-group">
+                            <h4>Difficulty:</h4>
+                            <th:block th:each="difficulty : ${T(package com.quiztest.Quiz.frontend.Difficulty).values()}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="difficultyRadioOptions"
+                                           th:id="'difficulty_' + ${difficulty}" th:value="${difficulty}" th:field="*{difficulty}">
+                                    <label class="form-check-label" th:for="'difficulty_' + ${difficulty}"
+                                           th:text="${difficulty}"></label>
+                                </div>
+                            </th:block>
+                        </div>
                     </div>
                 </div>
             </div>
